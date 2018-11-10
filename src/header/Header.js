@@ -8,8 +8,8 @@ import PersonPinIcon from '@material-ui/icons/PersonPin';
 import PowerSettingsNewIcon from '@material-ui/icons/PowerSettingsNew'
 import Dashboard from '@material-ui/icons/Dashboard';
 import Assignment from '@material-ui/icons/Assignment';
-import Grid from '@material-ui/core/Grid'
-import './Header.css'
+import Grid from '@material-ui/core/Grid';
+import './Header.css';
 
 /**
  * Function used to define the style
@@ -64,9 +64,9 @@ class Header extends Component {
                     <Grid container direction="row" justify="space-evenly" alignItems="center">
                         <Tabs value={value} onChange={this.handleChange} scrollable scrollButtons="off">
                             { !user && <Tab label="My account" icon={<PersonPinIcon />} /> }
-                            { user && <Tab label="Logout" icon={<PowerSettingsNewIcon />} /> }
-                            { user && <Tab label="Administrator panel" icon={<Dashboard />} /> }
                             { user && <Tab label="Access to the tasks" icon={<Assignment />} />}
+                            { user && user.is_superuser && <Tab label="Administrator panel" icon={<Dashboard />} /> }
+                            { user && <Tab label="Logout" icon={<PowerSettingsNewIcon />} /> }
                         </Tabs>
                     </Grid>
                 </AppBar>

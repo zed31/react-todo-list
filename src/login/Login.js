@@ -1,12 +1,20 @@
 import React, { Component } from 'react';
 import { withStyles } from '@material-ui/core/styles';
+import PropTypes, { instanceOf } from 'prop-types';
 import Grid from '@material-ui/core/Grid'
 import styles from '../utils/AccountStyle'
 import SnackBarError from '../utils/SnackBarError';
 import AccountForm from '../account/AccountForm';
 import { login } from '../services/ApiService';
+import { withCookies, Cookies } from 'react-cookie';
+import { COOKIE_USER_REGISTERED, COOKIE_SESSION_ID } from '../utils/Constants';
+import { computeCookieExpireDate } from '../utils/TimeUtils';
 
 class Login extends Component {
+    static propTypes = {
+        cookies: instanceOf(Cookies).isRequired
+    };
+
     /**
      * @constructor
      * @param {*} props Properties of the Register component
@@ -37,6 +45,8 @@ class Login extends Component {
             this.setState({ error: 'Input fields are invalids' });
         } else {
             login(loginInfo.email, loginInfo.password).then(response => {
+                const expires = computeCookieExpireDate(14);
+                this.props.cookies.set(COOKIE_USER_REGISTERED, response.data, { path: '/', expires });
                 this.props.onLoginFinished(response.data);
             }).catch(error => {
                 this.setState({ error: error.response.data.errors });
@@ -64,4 +74,4 @@ class Login extends Component {
     }
 }
 
-export default withStyles(styles)(Login);
+export default withCookies(withStyles(styles)(Login));
