@@ -33,7 +33,9 @@ class SnackBarError extends Component {
      */
     handleClose = (event, reason) => {
         this.setState({ open: false });
-        this.props.closeSnackbar();
+        if (this.props.closeSnackbar) {
+            this.props.closeSnackbar();
+        }
     }
 
     /**

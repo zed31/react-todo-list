@@ -1,6 +1,6 @@
 /* eslint-disable no-console */
 import axios from 'axios';
-import { LOGIN_URL, REGISTER_URL, LOGOUT_URL } from './ConstantService';
+import { LOGIN_URL, REGISTER_URL, LOGOUT_URL, TODO_URL } from './ConstantService';
 
 const ENABLE_CREDENTIALS_CHECK = { withCredentials: true };
 
@@ -26,5 +26,12 @@ export const login = (email, password) => {
  * Logout from the website
  */
 export const logout = () => {
-    axios.get(LOGOUT_URL, ENABLE_CREDENTIALS_CHECK);
+    return axios.get(LOGOUT_URL, ENABLE_CREDENTIALS_CHECK);
+}
+
+/**
+ * Retrieve all the todo from the current session
+ */
+export const todo = () => {
+    return axios.get(TODO_URL, ENABLE_CREDENTIALS_CHECK);
 }

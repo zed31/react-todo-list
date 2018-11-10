@@ -5,7 +5,8 @@ import './App.css';
 import Header from './header/Header'
 import Account from './account/Account'
 import { withCookies, Cookies } from 'react-cookie';
-import { COOKIE_SESSION_ID, COOKIE_USER_REGISTERED, TASK_LIST_INDEX, SIGN_IN_AND_UP_INDEX, ADMINISTRATOR_PANEL } from './utils/Constants';
+import { COOKIE_SESSION_ID, COOKIE_USER_REGISTERED, TASK_LIST_INDEX, SIGN_IN_AND_UP_INDEX, ADMINISTRATOR_PANEL_INDEX, DISCONNECT_INDEX } from './utils/Constants';
+import Logout from './logout/Logout';
 
 class TabContainer extends Component {
   /**
@@ -48,6 +49,7 @@ class App extends Component {
       user: userFromCookies,
       sessionId: sessionIdFromCookies,
       value: userFromCookies && sessionIdFromCookies ? TASK_LIST_INDEX : SIGN_IN_AND_UP_INDEX,
+      needToLogout: false
     }
   }
 
@@ -55,8 +57,14 @@ class App extends Component {
    * Change the state when the tab change on the header
    * @param {*} value The value of the state that change
    */
-  onTabChange = (value) => {
-    this.setState({ value })
+  onTabChange = value => {
+    this.setState((state, props) => {
+      const needToLogout = value === DISCONNECT_INDEX;
+      return {
+        value,
+        needToLogout
+      } 
+    });
   }
 
   /**
@@ -79,16 +87,38 @@ class App extends Component {
   }
 
   /**
+   * Called when the user logged out
+   */
+  onLogout = () => {
+    this.setState({
+      user: null,
+      value: SIGN_IN_AND_UP_INDEX,
+      needToLogout: false
+    });
+  }
+
+  /**
+   * Called when there are any errors on the logout
+   * @param {object} response The response from the API
+   */
+  onLogoutError = response => {
+    this.setState({
+      needToLogout: false
+    })
+  }
+
+  /**
    * Render the App component
    */
   render() {
-    const { value, user } = this.state
+    const { value, user, needToLogout } = this.state
     return (
       <div className="App">
           <Header user={user} onTabChange={this.onTabChange} />
           {value === SIGN_IN_AND_UP_INDEX && <Account onLogin={this.onUserSet} onLoginError={this.onLoginError} />}
           {value === TASK_LIST_INDEX && <TabContainer>Task list</TabContainer>}
-          {value === ADMINISTRATOR_PANEL && <TabContainer>Administrator panel</TabContainer>}
+          {value === ADMINISTRATOR_PANEL_INDEX && <TabContainer>Administrator panel</TabContainer>}
+          {value === DISCONNECT_INDEX && <Logout needToLogout={needToLogout} logoutSuccess={this.onLogout} logoutError={this.onLogoutError} /> }
       </div>
     );
   }

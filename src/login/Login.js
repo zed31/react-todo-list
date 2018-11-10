@@ -1,13 +1,13 @@
 import React, { Component } from 'react';
 import { withStyles } from '@material-ui/core/styles';
-import PropTypes, { instanceOf } from 'prop-types';
+import { instanceOf } from 'prop-types';
 import Grid from '@material-ui/core/Grid'
 import styles from '../utils/AccountStyle'
 import SnackBarError from '../utils/SnackBarError';
 import AccountForm from '../account/AccountForm';
 import { login } from '../services/ApiService';
 import { withCookies, Cookies } from 'react-cookie';
-import { COOKIE_USER_REGISTERED, COOKIE_SESSION_ID } from '../utils/Constants';
+import { COOKIE_USER_REGISTERED } from '../utils/Constants';
 import { computeCookieExpireDate } from '../utils/TimeUtils';
 
 class Login extends Component {
