@@ -15,3 +15,4 @@ export const REGISTER_URL = `${AUTH_URL}/${REGISTER}/`;
 export const LOGOUT_URL = `${AUTH_URL}/${LOGOUT}/`;
 export const ME_TODO_URL = `${URL}/${CURRENT_VERSION}/${ME}/${TODO}/`;
 export const TODO_URL = `${URL}/${CURRENT_VERSION}/${TODO}/`;
+export const USERS_URL = `${URL}/${CURRENT_VERSION}/${USERS}/`

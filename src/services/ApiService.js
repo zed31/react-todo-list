@@ -1,6 +1,6 @@
 /* eslint-disable no-console */
 import axios from 'axios';
-import { LOGIN_URL, REGISTER_URL, LOGOUT_URL, ME_TODO_URL, TODO_URL } from './ConstantService';
+import { LOGIN_URL, REGISTER_URL, LOGOUT_URL, ME_TODO_URL, TODO_URL, USERS_URL } from './ConstantService';
 
 axios.defaults.xsrfCookieName = 'csrftoken';
 axios.defaults.xsrfHeaderName = 'X-CSRFToken';
@@ -63,4 +63,11 @@ export const patchTask = (id, task) => {
  */
 export const removeTask = id => {
     return axios.delete(`${TODO_URL}${id}/`, ENABLE_CREDENTIALS_CHECK);
+}
+
+/**
+ * Retrieve the suers from the API
+ */
+export const users = () => {
+    return axios.get(USERS_URL, ENABLE_CREDENTIALS_CHECK);
 }
