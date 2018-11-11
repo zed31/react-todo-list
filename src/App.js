@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
-import Typography from '@material-ui/core/Typography';
-import PropTypes, { instanceOf } from 'prop-types';
+import { instanceOf } from 'prop-types';
 import './App.css';
 import Header from './header/Header'
 import Account from './account/Account'
@@ -8,30 +7,7 @@ import { withCookies, Cookies } from 'react-cookie';
 import { COOKIE_USER_REGISTERED, TASK_LIST_INDEX, SIGN_IN_AND_UP_INDEX, ADMINISTRATOR_PANEL_INDEX, DISCONNECT_INDEX } from './utils/Constants';
 import Logout from './logout/Logout';
 import TaskList from './tasks/TaskList'
-
-class TabContainer extends Component {
-  /**
-   * @constructor
-   * @param {*} props Properties of the component
-   */
-  constructor(props) {
-      super(props);
-      this.propTypes = {
-          children: PropTypes.node.isRequired
-      };
-  }
-
-  /**
-   * Render the tab container
-   */
-  render() {
-      return (
-          <Typography component="div" style={{ padding: 8 * 3 }}>
-              {this.props.children}
-          </Typography>
-      );
-  }
-};
+import AdminPanel from './administrator/AdminPanel'
 
 class App extends Component {
   static propTypes = {
@@ -116,7 +92,7 @@ class App extends Component {
           <Header user={user} onTabChange={this.onTabChange} />
           {value === SIGN_IN_AND_UP_INDEX && <Account onLogin={this.onUserSet} onLoginError={this.onLoginError} />}
           {value === TASK_LIST_INDEX && <TaskList />}
-          {value === ADMINISTRATOR_PANEL_INDEX && <TabContainer>Administrator panel</TabContainer>}
+          {value === ADMINISTRATOR_PANEL_INDEX && <AdminPanel />}
           {value === DISCONNECT_INDEX && <Logout needToLogout={needToLogout} logoutSuccess={this.onLogout} logoutError={this.onLogoutError} /> }
       </div>
     );

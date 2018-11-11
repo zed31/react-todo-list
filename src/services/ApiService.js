@@ -1,6 +1,6 @@
 /* eslint-disable no-console */
 import axios from 'axios';
-import { LOGIN_URL, REGISTER_URL, LOGOUT_URL, ME_TODO_URL, TODO_URL } from './ConstantService';
+import { LOGIN_URL, REGISTER_URL, LOGOUT_URL, ME_TODO_URL, TODO_URL, USERS_URL, ADMIN_TODO_POST_URL } from './ConstantService';
 
 axios.defaults.xsrfCookieName = 'csrftoken';
 axios.defaults.xsrfHeaderName = 'X-CSRFToken';
@@ -63,4 +63,51 @@ export const patchTask = (id, task) => {
  */
 export const removeTask = id => {
     return axios.delete(`${TODO_URL}${id}/`, ENABLE_CREDENTIALS_CHECK);
+}
+
+/**
+ * Retrieve the suers from the API
+ */
+export const users = () => {
+    return axios.get(USERS_URL, ENABLE_CREDENTIALS_CHECK);
+}
+
+/**
+ * Path the user into the API
+ * @param {int} id the user id
+ * @param {object} info the user information
+ */
+export const patchUser = (id, info) => {
+    return axios.patch(`${USERS_URL}${id}/`, info, ENABLE_CREDENTIALS_CHECK);
+}
+
+/**
+ * Delete an user with specific ID on the database
+ * @param {int} id the user id
+ */
+export const deleteUser = id => {
+    return axios.delete(`${USERS_URL}${id}/`, ENABLE_CREDENTIALS_CHECK);
+}
+
+/**
+ * Post an user object to the API
+ * @param {*} user The user being inserted
+ */
+export const postUser = user => {
+    return axios.post(USERS_URL, user, ENABLE_CREDENTIALS_CHECK);
+}
+
+/**
+ * Get all the tasks of all users from the API
+ */
+export const getAllTasks = () => {
+    return axios.get(TODO_URL, ENABLE_CREDENTIALS_CHECK);
+}
+
+/**
+ * Create a task when being administrator for another user
+ * @param {*} task the task being sent to the API
+ */
+export const createTaskForAnotherUser = task => {
+    return axios.post(ADMIN_TODO_POST_URL, task, ENABLE_CREDENTIALS_CHECK);
 }
