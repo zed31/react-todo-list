@@ -66,10 +66,8 @@ class TaskList extends Component {
     addTask = task => {
         this.setState((state, props) => {
             let tasks = state.tasks;
-            let allTasks = state.allTasks;
             tasks.push(task);
-            allTasks.push(task);
-            return { tasks, allTasks };
+            return { tasks };
         })
     }
 
@@ -89,7 +87,8 @@ class TaskList extends Component {
     removeTask = id => {
         let { allTasks, tasks } = this.state;
         tasks = allTasks.filter(task => task.id !== id);
-        this.setState({ tasks });
+        allTasks = allTasks.filter(task => task.id !== id);
+        this.setState({ tasks, allTasks });
     }
 
     /**
