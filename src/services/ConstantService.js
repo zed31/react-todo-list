@@ -7,6 +7,7 @@ const LOGIN = "login";
 const REGISTER = "register";
 const LOGOUT = "logout";
 const URL = "http://localhost:8000/api";
+const ADMIN = 'admin';
 const VERSIONED_URL = `${URL}/${CURRENT_VERSION}`;
 const AUTH_URL = `${VERSIONED_URL}/${AUTH}`;
 
@@ -16,3 +17,4 @@ export const LOGOUT_URL = `${AUTH_URL}/${LOGOUT}/`;
 export const ME_TODO_URL = `${URL}/${CURRENT_VERSION}/${ME}/${TODO}/`;
 export const TODO_URL = `${URL}/${CURRENT_VERSION}/${TODO}/`;
 export const USERS_URL = `${URL}/${CURRENT_VERSION}/${USERS}/`
+export const ADMIN_TODO_POST_URL = `${URL}/${CURRENT_VERSION}/${ADMIN}/${TODO}/`

@@ -9,6 +9,7 @@ import Typography from '@material-ui/core/Typography';
 import SnackBarError from '../utils/SnackBarError';
 import { patchUser, deleteUser } from '../services/ApiService';
 import UserEditDialog from './UserEditDialog';
+import TaskCreationDialog from './TaskCreationDialog';
 
 const styles = {
     card: {
@@ -127,6 +128,7 @@ class User extends Component {
                     </CardActions>}
                     <CardActions>
                         <UserEditDialog email={email} id={id} />
+                        <TaskCreationDialog email={email} id={id} />
                     </CardActions>
                 </Card>
                 {errorMessage && <SnackBarError message={errorMessage} closeSnackBar={this.closeSnackBar} />}

@@ -5,6 +5,7 @@ import AppBar from '@material-ui/core/AppBar';
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
 import UserList from './UserList';
+import TaskList from './TaskList';
 
 /**
  * Define the style of the AdminPanel component
@@ -56,6 +57,7 @@ class AdminPanel extends Component {
                     </Tabs>
                 </AppBar>
                 { triggeredTab === USER_PANEL && <UserList /> }
+                { triggeredTab === TASK_PANEL && <TaskList /> }
             </div>
         )
     }
