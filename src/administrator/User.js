@@ -8,6 +8,7 @@ import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 import SnackBarError from '../utils/SnackBarError';
 import { patchUser } from '../services/ApiService';
+import UserEditDialog from './UserEditDialog';
 
 const styles = {
     card: {
@@ -82,7 +83,7 @@ class User extends Component {
      * Render the Task react component
      */
     render() {
-        const { classes, readOnly } = this.props;
+        const { classes, readOnly, id } = this.props;
         const { email, isBan, isSuperuser, errorMessage } = this.state;
 
         return (
@@ -111,9 +112,7 @@ class User extends Component {
                         </Button>}
                     </CardActions>}
                     <CardActions>
-                        <Button size="small" color="primary">
-                            Details
-                        </Button>
+                        <UserEditDialog email={email} id={id} />
                     </CardActions>
                 </Card>
                 {errorMessage && <SnackBarError message={errorMessage} closeSnackBar={this.closeSnackBar} />}
