@@ -5,8 +5,9 @@ import './App.css';
 import Header from './header/Header'
 import Account from './account/Account'
 import { withCookies, Cookies } from 'react-cookie';
-import { COOKIE_SESSION_ID, COOKIE_USER_REGISTERED, TASK_LIST_INDEX, SIGN_IN_AND_UP_INDEX, ADMINISTRATOR_PANEL_INDEX, DISCONNECT_INDEX } from './utils/Constants';
+import { COOKIE_USER_REGISTERED, TASK_LIST_INDEX, SIGN_IN_AND_UP_INDEX, ADMINISTRATOR_PANEL_INDEX, DISCONNECT_INDEX } from './utils/Constants';
 import Logout from './logout/Logout';
+import TaskList from './tasks/TaskList'
 
 class TabContainer extends Component {
   /**
@@ -44,11 +45,9 @@ class App extends Component {
   constructor(props) {
     super(props);
     const userFromCookies = this.props.cookies.get(COOKIE_USER_REGISTERED);
-    const sessionIdFromCookies = this.props.cookies.get(COOKIE_SESSION_ID);
     this.state = {
       user: userFromCookies,
-      sessionId: sessionIdFromCookies,
-      value: userFromCookies && sessionIdFromCookies ? TASK_LIST_INDEX : SIGN_IN_AND_UP_INDEX,
+      value: userFromCookies ? TASK_LIST_INDEX : SIGN_IN_AND_UP_INDEX,
       needToLogout: false
     }
   }
@@ -116,7 +115,7 @@ class App extends Component {
       <div className="App">
           <Header user={user} onTabChange={this.onTabChange} />
           {value === SIGN_IN_AND_UP_INDEX && <Account onLogin={this.onUserSet} onLoginError={this.onLoginError} />}
-          {value === TASK_LIST_INDEX && <TabContainer>Task list</TabContainer>}
+          {value === TASK_LIST_INDEX && <TaskList />}
           {value === ADMINISTRATOR_PANEL_INDEX && <TabContainer>Administrator panel</TabContainer>}
           {value === DISCONNECT_INDEX && <Logout needToLogout={needToLogout} logoutSuccess={this.onLogout} logoutError={this.onLogoutError} /> }
       </div>
