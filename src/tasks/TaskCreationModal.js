@@ -7,7 +7,7 @@ import AddIcon from '@material-ui/icons/Add';
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
 import SnackBarError from '../utils/SnackBarError';
-import { todo, postTask } from '../services/ApiService';
+import { postTask } from '../services/ApiService';
 
 /**
  * Styles of the modal on the Material-UI

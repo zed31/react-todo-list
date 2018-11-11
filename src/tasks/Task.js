@@ -12,7 +12,8 @@ import SnackBarError from '../utils/SnackBarError';
 
 const styles = {
     card: {
-      maxWidth: 345
+      maxWidth: 345,
+      minWidth: 345
     },
     media: {
       height: 140,
@@ -106,6 +107,7 @@ class Task extends Component {
      */
     setToDone = () => {
         this.modifyTaskStatus('D', 'green');
+        this.props.onStatusChange(this.props.id, 'D')
     }
 
     /**
@@ -113,6 +115,7 @@ class Task extends Component {
      */
     setToCreated = () => {
         this.modifyTaskStatus('C', 'white');
+        this.props.onStatusChange(this.props.id, 'C')
     }
 
     /**
@@ -148,7 +151,7 @@ class Task extends Component {
      */
     render() {
         const { title, description, status, modification, errorMessage, backgroundColor } = this.state;
-        const { owner, classes } = this.props;
+        const { owner, classes, created, readOnly } = this.props;
 
         return (
             <Fragment>
@@ -156,6 +159,9 @@ class Task extends Component {
                     <CardContent style={{ backgroundColor }}>
                         {!modification && 
                             <Fragment>
+                                <Typography component="p">
+                                    Created on: {new Date(created).toLocaleDateString()}
+                                </Typography>
                                 <Typography component="p">
                                     Status: {status}
                                 </Typography>
@@ -170,7 +176,7 @@ class Task extends Component {
                                 </Typography>
                             </Fragment>
                         }
-                        { modification &&
+                        { modification && !readOnly &&
                             <Fragment>
                                 <Typography component="p">
                                     Status: {status}
@@ -206,7 +212,7 @@ class Task extends Component {
                             </Fragment>
                         }
                     </CardContent>
-                    <CardActions>
+                    {!readOnly && <CardActions>
                         <Button onClick={this.removeTask} size="small" color="primary">
                             Remove
                         </Button>
@@ -225,7 +231,7 @@ class Task extends Component {
                         { modification && <Button onClick={this.closeModification} size="small" color="primary">
                             Close
                         </Button>}
-                    </CardActions>
+                    </CardActions>}
                 </Card>
                 {errorMessage && <SnackBarError message={errorMessage} closeSnackBar={this.closeSnackBar} />}
             </Fragment>
