@@ -71,3 +71,12 @@ export const removeTask = id => {
 export const users = () => {
     return axios.get(USERS_URL, ENABLE_CREDENTIALS_CHECK);
 }
+
+/**
+ * Path the user into the API
+ * @param {int} id the user id
+ * @param {object} info the user information
+ */
+export const patchUser = (id, info) => {
+    return axios.patch(`${USERS_URL}${id}/`, info, ENABLE_CREDENTIALS_CHECK);
+}

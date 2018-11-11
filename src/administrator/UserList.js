@@ -73,9 +73,27 @@ class UserList extends Component {
         });
     }
 
+    /**
+     * Apply filter to the user array
+     * @param {int} appBarIndex The index used to determine which fields will be filtered
+     */
     applyFilter = appBarIndex => {
         const { users } = this.state;
         return users.filter(user => appBarIndex === BAN_USERS_INDEX ? user.is_ban : user.is_superuser);
+    }
+
+    /**
+     * Called when an user status gets updated
+     * @param {str} key The key being updated
+     * @param {int} id the id of the user
+     * @param {boolean} value The value of the user key field
+     */
+    onUserStatusUpdated = key => (id, value) => {
+        let { users } = this.state;
+        let user = users.find(user => user.id === id);
+        if (user) {
+            user[key] = value;
+        }
     }
 
     /**
@@ -95,10 +113,11 @@ class UserList extends Component {
                 </AppBar>
                 <Grid container direction="row" justify="space-evenly" alignItems="center" className={classes.task}>
                     {appBarIndex === ALL_USERS_INDEX && users.map(user => (
-                        <User key={user.id} id={user.id} email={user.email} isSuperuser={user.is_superuser} isBan={user.is_ban} />
+                        <User key={user.id} id={user.id} email={user.email} isSuperuser={user.is_superuser} isBan={user.is_ban} 
+                            onUserBanStatusUpdated={this.onUserStatusUpdated('is_ban')} onUserAdminStatusUpdated={this.onUserStatusUpdated('is_superuser')} />
                     ))}
                     {appBarIndex !== ALL_USERS_INDEX && this.applyFilter(appBarIndex).map(user => (
-                        <User key={user.id} id={user.id} email={user.email} isSuperuser={user.is_superuser} isBan={user.is_ban} />
+                        <User key={user.id} id={user.id} readOnly={true} email={user.email} isSuperuser={user.is_superuser} isBan={user.is_ban} />
                     ))}
                 </Grid>
                 {errorMessage && <SnackBarError message={errorMessage} closeSnackbar={this.closeSnackbar} />}
