@@ -7,13 +7,14 @@ import CardContent from '@material-ui/core/CardContent';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 import SnackBarError from '../utils/SnackBarError';
-import { patchUser } from '../services/ApiService';
+import { patchUser, deleteUser } from '../services/ApiService';
 import UserEditDialog from './UserEditDialog';
 
 const styles = {
     card: {
       maxWidth: 345,
-      minWidth: 345
+      minWidth: 345,
+      margin: 10
     },
     media: {
       height: 140,
@@ -80,6 +81,19 @@ class User extends Component {
     }
 
     /**
+     * Remove an user on the database
+     */
+    removeUser = () => {
+        deleteUser(this.props.id).then(response => {
+            if (this.props.onUserRemoved) {
+                this.props.onUserRemoved(this.props.id);
+            }
+        }).catch(error => {
+            this.setState({ errorMessage: error.response.data.errors });
+        })
+    }
+
+    /**
      * Render the Task react component
      */
     render() {
@@ -95,7 +109,7 @@ class User extends Component {
                         </Typography>
                     </CardContent>
                     {!readOnly && <CardActions>
-                        <Button size="small" color="primary">
+                        <Button size="small" color="primary"  onClick={this.removeUser}>
                             Remove
                         </Button>
                         {!isBan && <Button size="small" onClick={this.setUserBanStatus(true)} color="primary">

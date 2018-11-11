@@ -121,7 +121,7 @@ class UserEditDialog extends Component {
                         <TextField
                             autoFocus
                             margin="dense"
-                            id="name"
+                            id="email-modify-user"
                             label="Email Address"
                             onChange={this.handleChanges('email')}
                             type="email"
@@ -131,7 +131,7 @@ class UserEditDialog extends Component {
                         <TextField
                             autoFocus
                             margin="dense"
-                            id="name"
+                            id="password-modify-user"
                             label="Password"
                             type="password"
                             onChange={this.handleChanges('password')}
@@ -141,7 +141,7 @@ class UserEditDialog extends Component {
                         <TextField
                             autoFocus
                             margin="dense"
-                            id="name"
+                            id="confirm-modify-user"
                             label="Confirm password"
                             type="password"
                             onChange={this.handleChanges('confirm')}

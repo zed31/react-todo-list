@@ -80,3 +80,19 @@ export const users = () => {
 export const patchUser = (id, info) => {
     return axios.patch(`${USERS_URL}${id}/`, info, ENABLE_CREDENTIALS_CHECK);
 }
+
+/**
+ * Delete an user with specific ID on the database
+ * @param {int} id the user id
+ */
+export const deleteUser = id => {
+    return axios.delete(`${USERS_URL}${id}/`, ENABLE_CREDENTIALS_CHECK);
+}
+
+/**
+ * Post an user object to the API
+ * @param {*} user The user being inserted
+ */
+export const postUser = user => {
+    return axios.post(USERS_URL, user, ENABLE_CREDENTIALS_CHECK);
+}

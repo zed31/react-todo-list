@@ -8,6 +8,7 @@ import React, { Component, Fragment } from 'react';
 import { users } from '../services/ApiService';
 import SnackBarError from '../utils/SnackBarError';
 import User from './User';
+import UserCreationDialog from './UserCreationDialog';
 
 /**
  * Handle the style of the material-UI UserList design
@@ -97,6 +98,30 @@ class UserList extends Component {
     }
 
     /**
+     * Add an user inside the UserList
+     * @param {*} user the user being inserted
+     */
+    addUser = user => {
+        this.setState((state, _) => {
+            let users = state.users;
+            users.push(user);
+            return { users };
+        })
+    }
+
+    /**
+     * Remove an user from the array
+     * @param {int} id The id of the user being removed
+     */
+    removeUser = id => {
+        this.setState((state, _) => {
+            let users = state.users;
+            users = users.filter(user => user.id !== id);
+            return { users };
+        });
+    }
+
+    /**
      * Render the UserList component
      */
     render() {
@@ -114,13 +139,15 @@ class UserList extends Component {
                 <Grid container direction="row" justify="space-evenly" alignItems="center" className={classes.task}>
                     {appBarIndex === ALL_USERS_INDEX && users.map(user => (
                         <User key={user.id} id={user.id} email={user.email} isSuperuser={user.is_superuser} isBan={user.is_ban} 
-                            onUserBanStatusUpdated={this.onUserStatusUpdated('is_ban')} onUserAdminStatusUpdated={this.onUserStatusUpdated('is_superuser')} />
+                            onUserBanStatusUpdated={this.onUserStatusUpdated('is_ban')} 
+                            onUserAdminStatusUpdated={this.onUserStatusUpdated('is_superuser')} onUserRemoved={this.removeUser} />
                     ))}
                     {appBarIndex !== ALL_USERS_INDEX && this.applyFilter(appBarIndex).map(user => (
                         <User key={user.id} id={user.id} readOnly={true} email={user.email} isSuperuser={user.is_superuser} isBan={user.is_ban} />
                     ))}
                 </Grid>
                 {errorMessage && <SnackBarError message={errorMessage} closeSnackbar={this.closeSnackbar} />}
+                <UserCreationDialog onUserCreated={this.addUser} />
             </Fragment>
         );
     }

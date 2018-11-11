@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
-import Typography from '@material-ui/core/Typography';
-import PropTypes, { instanceOf } from 'prop-types';
+import { instanceOf } from 'prop-types';
 import './App.css';
 import Header from './header/Header'
 import Account from './account/Account'
@@ -9,30 +8,6 @@ import { COOKIE_USER_REGISTERED, TASK_LIST_INDEX, SIGN_IN_AND_UP_INDEX, ADMINIST
 import Logout from './logout/Logout';
 import TaskList from './tasks/TaskList'
 import AdminPanel from './administrator/AdminPanel'
-
-class TabContainer extends Component {
-  /**
-   * @constructor
-   * @param {*} props Properties of the component
-   */
-  constructor(props) {
-      super(props);
-      this.propTypes = {
-          children: PropTypes.node.isRequired
-      };
-  }
-
-  /**
-   * Render the tab container
-   */
-  render() {
-      return (
-          <Typography component="div" style={{ padding: 8 * 3 }}>
-              {this.props.children}
-          </Typography>
-      );
-  }
-};
 
 class App extends Component {
   static propTypes = {
