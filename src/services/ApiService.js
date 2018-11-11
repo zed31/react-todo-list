@@ -1,6 +1,9 @@
 /* eslint-disable no-console */
 import axios from 'axios';
-import { LOGIN_URL, REGISTER_URL, LOGOUT_URL, TODO_URL } from './ConstantService';
+import { LOGIN_URL, REGISTER_URL, LOGOUT_URL, ME_TODO_URL, TODO_URL } from './ConstantService';
+
+axios.defaults.xsrfCookieName = 'csrftoken';
+axios.defaults.xsrfHeaderName = 'X-CSRFToken';
 
 const ENABLE_CREDENTIALS_CHECK = { withCredentials: true };
 
@@ -33,5 +36,31 @@ export const logout = () => {
  * Retrieve all the todo from the current session
  */
 export const todo = () => {
-    return axios.get(TODO_URL, ENABLE_CREDENTIALS_CHECK);
+    return axios.get(ME_TODO_URL, ENABLE_CREDENTIALS_CHECK);
+}
+
+/**
+ * Send a new task on the API
+ * @param {str} title the title of the new task
+ * @param {str} description the description of the new task
+ */
+export const postTask = (title, description) => {
+    return axios.post(TODO_URL, { title, description }, ENABLE_CREDENTIALS_CHECK);
+}
+
+/**
+ * Patch a specific task
+ * @param {int} id The id of the task
+ * @param {object} task The JSON data of a task
+ */
+export const patchTask = (id, task) => {
+    return axios.patch(`${TODO_URL}${id}/`, task, ENABLE_CREDENTIALS_CHECK);
+}
+
+/**
+ * Remove a specific task from the API
+ * @param {*} id Id of the task
+ */
+export const removeTask = id => {
+    return axios.delete(`${TODO_URL}${id}/`, ENABLE_CREDENTIALS_CHECK);
 }
